@@ -1,7 +1,7 @@
 import { useContractRead, useContractWrite } from 'wagmi';
 import CounterABI from '../abi/Counter.json';
 
-const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
+const CONTRACT_ADDRESS = "0x1234567890abcdef1234567890abcdef12345678" as `0x${string}`;
 
 export function useCounter() {
   const { data: count } = useContractRead({
