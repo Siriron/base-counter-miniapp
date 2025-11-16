@@ -1,21 +1,26 @@
-import { useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { useContractRead, useContractWrite } from 'wagmi';
 import CounterABI from '../abi/Counter.json';
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
 
-export const useCounter = () => {
+export function useCounter() {
+  // Read current count
   const { data: count } = useContractRead({
     address: CONTRACT_ADDRESS,
     abi: CounterABI,
-    functionName: 'count',
+    functionName: 'getCount',
   });
 
-  const { config } = usePrepareContractWrite({
+  // Increment counter
+  const { data, write: increment } = useContractWrite({
     address: CONTRACT_ADDRESS,
     abi: CounterABI,
     functionName: 'increment',
   });
-  const { write: increment } = useContractWrite(config);
 
-  return { count, increment };
-};
+  return {
+    count,
+    increment,
+    data,
+  };
+}
